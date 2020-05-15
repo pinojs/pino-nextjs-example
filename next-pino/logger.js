@@ -15,7 +15,7 @@ const pinoConfig = {
 if (config.serverUrl) {
   pinoConfig.browser.transmit = {
     level: 'info',
-    send: async (level, logEvent) => {
+    send: (level, logEvent) => {
       const msg = logEvent.messages[0]
 
       const headers = {
