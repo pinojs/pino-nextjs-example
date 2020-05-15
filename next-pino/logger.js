@@ -24,7 +24,7 @@ if (config.serverUrl) {
         type: 'application/json'
       }
       let blob = new Blob([JSON.stringify({ msg, level })], headers)
-      navigator.sendBeacon(`${config.serverUrl}/api/log`, blob)
+      navigator.sendBeacon(`${config.serverUrl}/log`, blob)
     }
   }
 }

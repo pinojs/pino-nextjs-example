@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "next": "9.4.0",
     "pino": "^6.2.1",
+    "pino-http": "^5.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   }
