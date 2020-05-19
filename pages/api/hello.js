@@ -1,7 +1,5 @@
-const logger = require('pino')()
-
 export default (req, res) => {
-  logger.info('/api/hello')
+  req.log.info('/api/hello')
   res.statusCode = 200
   res.json({ msg: 'hi there' })
 }

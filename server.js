@@ -15,6 +15,7 @@ app.prepare().then(() => {
     // This tells it to parse the query portion of the URL.
     const parsedUrl = parse(req.url, true)
     const { pathname, query } = parsedUrl
+    logger(req, res)
 
     if (pathname === '/log') {
         let data = null
@@ -23,7 +24,6 @@ app.prepare().then(() => {
         })
         req.on('end', () => {
             const { msg, level = 'info' } = JSON.parse(data)
-            logger(req, res)
             req.log[level](msg)
         })
         res.statusCode = 200;
