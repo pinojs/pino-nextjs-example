@@ -26,9 +26,9 @@ app.prepare().then(() => {
             const { msg, level = 'info' } = JSON.parse(data)
             req.log[level](msg)
         })
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('logged on server');
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'text/plain')
+        res.end('logged on server')
     }
     else {
       handle(req, res, parsedUrl)
