@@ -7,6 +7,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+// this is the logger for the server
 var logger = require('pino-http')()
 
 app.prepare().then(() => {
