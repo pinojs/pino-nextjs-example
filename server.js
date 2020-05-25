@@ -23,13 +23,19 @@ app.prepare().then(() => {
         req.on('data', chunk => {
             data = chunk
         })
+        req.on('error', err => {
+            req.log.error(err)
+            res.statusCode = 500
+            res.setHeader('Content-Type', 'text/plain')
+            res.end('error ocurred when logging to server')
+        })
         req.on('end', () => {
             const { msg, level = 'info' } = JSON.parse(data)
             req.log[level](msg)
+            res.statusCode = 200
+            res.setHeader('Content-Type', 'text/plain')
+            res.end('logged on server')
         })
-        res.statusCode = 200
-        res.setHeader('Content-Type', 'text/plain')
-        res.end('logged on server')
     }
     else {
       handle(req, res, parsedUrl)
