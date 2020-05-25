@@ -2,8 +2,9 @@ import Head from 'next/head'
 import logger from '../next-pino/logger'
 
 export default function Home(req) {
-  if (typeof window === 'undefined' && req && req.log)
+  if (typeof window === 'undefined' && req && req.log) {
     logger = req.log
+  }
 
   logger.info('Home page loaded')
 
