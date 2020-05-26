@@ -10,6 +10,19 @@ const handle = app.getRequestHandler()
 // this is the logger for the server
 var logger = require('pino-http')()
 
+const okResponse = res => {
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/plain')
+  res.end('message logged on server')
+}
+
+const errorResponse = res => {
+  res.statusCode = 500
+  res.setHeader('Content-Type', 'text/plain')
+  res.end('error ocurred when logging on server')
+}
+
+
 app.prepare().then(() => {
   createServer((req, res) => {
     // Be sure to pass `true` as the second argument to `url.parse`.
@@ -20,22 +33,22 @@ app.prepare().then(() => {
 
     if (pathname === '/log') {
         req.setEncoding('utf8')
-        let data = null
+        let data = ''
         req.on('data', chunk => {
             data += chunk
         })
         req.on('error', err => {
             req.log.error(err)
-            res.statusCode = 500
-            res.setHeader('Content-Type', 'text/plain')
-            res.end('error ocurred when logging to server')
+            return errorResponse(res)
         })
         req.on('end', () => {
-            const { msg, level = 'info' } = JSON.parse(data)
-            req.log[level](msg)
-            res.statusCode = 200
-            res.setHeader('Content-Type', 'text/plain')
-            res.end('logged on server')
+            try {
+              const { msg, level = 'info' } = JSON.parse(data)
+              req.log[level](msg)
+            } catch (err) {
+              return errorResponse(res)
+            }
+            return okResponse(res)
         })
     }
     else {
