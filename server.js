@@ -1,6 +1,7 @@
 // server.js
 const { createServer } = require('http')
 const { parse } = require('url')
+const stream = require('stream')
 const next = require('next')
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -37,18 +38,18 @@ app.prepare().then(() => {
         req.on('data', chunk => {
             data += chunk
         })
-        req.on('error', err => {
+        stream.finished(req, (err) => {
+          if (err) {
             req.log.error(err)
             return errorResponse(res)
-        })
-        req.on('end', () => {
-            try {
-              const { msg, level = 'info' } = JSON.parse(data)
-              req.log[level](msg)
-            } catch (err) {
-              return errorResponse(res)
-            }
-            return okResponse(res)
+          }
+          try {
+            const { msg, level = 'info' } = JSON.parse(data)
+            req.log[level](msg)
+          } catch (err) {
+            return errorResponse(res)
+          }
+          return okResponse(res)
         })
     }
     else {
