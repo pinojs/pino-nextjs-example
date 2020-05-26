@@ -19,6 +19,7 @@ app.prepare().then(() => {
     logger(req, res)
 
     if (pathname === '/log') {
+        req.setEncoding('utf8')
         let data = null
         req.on('data', chunk => {
             data = chunk
