@@ -22,7 +22,7 @@ app.prepare().then(() => {
         req.setEncoding('utf8')
         let data = null
         req.on('data', chunk => {
-            data = chunk
+            data += chunk
         })
         req.on('error', err => {
             req.log.error(err)
