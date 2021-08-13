@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
-    "next": "^9.4.0",
+    "next": "^11.1.0",
     "pino": "^6.2.1",
     "pino-http": "^5.1.0",
     "react": "16.13.1",
